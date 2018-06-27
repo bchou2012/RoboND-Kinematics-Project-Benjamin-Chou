@@ -1,7 +1,7 @@
-Udacity Kinematics Project Writeup
-=
+# Udacity Kinematics Project Writeup
 
-##Kuka Arm Diagram
+
+## Kuka Arm Diagram
 
 The first step is to diagram the Kuka Arm configuration using the kr210.urdf file:
 <img src="https://github.com/bchou2012/RoboND-Kinematics-Project-Benjamin-Chou/blob/master/images/Kuka%20Arm%20Base%20Diagram.jpg?raw=true" alt="Kuka Arm URDF Layout" width="640px">
@@ -12,7 +12,7 @@ The above Kuka Arm layout has new reference frames defined to allow for  the use
 
 Going forward as a simplification d7 combines the distance from DH6 to the end effector and the grip length.
 
-##Forward Kinematics
+## Forward Kinematics
 
 There are a total of seven DH transformation matrices from the base to the end effector(EE), with the resulting final matrix represented as:
 
@@ -25,7 +25,7 @@ This results in a corrective (corr) matrix of:
 
 **R\_corr = R\_z\_corr x R\_y_corr**
 
-##Inverse Kinematics
+## Inverse Kinematics
 
 For the inverse kinematics, we first solve for the wrist center. The simulation gives us the end effector position and Euler angles for roll-pitch-yaw. We can use that information to solve for the wrist center. 
 
@@ -47,7 +47,7 @@ Rearranged to solve for the wrist coordinates:
 
 Now we can start solving for the Theta values for the DH matrix.
 
-##Solving for Theta
+## Solving for Theta
 
 All joints in the arm from the base to the wrist center are coplanar with the plane always being normal to the XY plane.
 
@@ -77,7 +77,7 @@ With the first three angles solved for, we can isolate the matrix for the last 3
 
 <img src="https://github.com/bchou2012/RoboND-Kinematics-Project-Benjamin-Chou/blob/master/images/Theta%204%20-%206.jpg?raw=true" alt="Theta 4-6 calculations" width="720px">
 
-##Code Implementation
+## Code Implementation
 
 Code used the Sympy matrix methods detailed in the Kinematics classes and labs. For a complete breakdown see comments in **IK\_server.py**
 
@@ -118,7 +118,7 @@ From the Common Questions page, the **trajectory\_sampler.cpp** file had a sleep
 
     ros::Duration(6.0).sleep();
 
-##Results
+## Results
 
 Several iterations had 8 out of 10 retrievals, with one case going into 12 straight successes. For final submission the following images show 9 straight retrievals from start:
 
@@ -134,6 +134,6 @@ Several iterations had 8 out of 10 retrievals, with one case going into 12 strai
 
 <img src="https://github.com/bchou2012/RoboND-Kinematics-Project-Benjamin-Chou/blob/master/images/9%20objects.png?raw=true" alt="9 objects retrieved" width="640px">
 
-##Future Improvements
+## Future Improvements
 
 At this time thoughts for future improvements include a more robust code for optimizing the arm movement, as there were several edge cases where the arm took large movements. Making LU matrix inversion work properly in theory would make for a more mathematically true setup. 
